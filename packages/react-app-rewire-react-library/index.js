@@ -14,25 +14,30 @@ const rewireReactLibrary = (config, env, options, overrideConfig = false) => {
     const entryFile = options.module;
     const outFile = path.basename(options.main);
     const outDir = options.main.replace(outFile, '');
+    const libraryTarget = optons.libraryTarget || 'commonjs';
     /**
      * add library configurations to webpack config
      */
     config.output.library = libraryName;
-    config.output.libraryTarget = 'commonjs';
+    config.output.libraryTarget = options.libraryTarget;
     /**
      * Change the webpack entry and output path
      */
     config.entry = { [libraryName]: path.resolve(entryFile) };
     config.output.filename = outFile;
     config.output.path = path.resolve(outDir);
-    /**
-     * Add all package dependencies as externals as commonjs externals
-     */
-    let externals = {};
-    Object.keys(options.dependencies).forEach(key => {
-      externals[key] = `commonjs ${key}`;
-    });
-    config.externals = externals;
+
+    if (libraryTarget === 'commonjs'){
+      /**
+       * Add all package dependencies as externals as commonjs externals
+       */
+      let externals = {};
+      Object.keys(options.dependencies).forEach(key => {
+        externals[key] = `commonjs ${key}`;
+      });
+      config.externals = externals;
+    }
+
     /**
     * Clear all plugins from CRA webpack config
     */
