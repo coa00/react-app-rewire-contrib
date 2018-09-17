@@ -1,10 +1,10 @@
 {
-  "name": "react-app-rewire-react-library",
+  "name": "react-app-rewire-react-umd-library",
   "version": "0.1.1",
-  "description": "Use create-react-app to build react libraries",
+  "description": "Use create-react-app to build react umd libraries",
   "main": "index.js",
-  "repository": "https://github.com/osdevisnot/react-app-rewire-contrib.git",
+  "repository": "https://github.com/coa00/react-app-rewire-contrib.git",
   "keywords": [],
-  "author": "osdevisnot <osdevisnot@gmail.com>",
+  "author": "coa00 <coa.andu@gmail.com>",
   "license": "ISC"
 }
