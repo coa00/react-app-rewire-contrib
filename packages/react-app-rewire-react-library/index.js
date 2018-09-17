@@ -14,7 +14,7 @@ const rewireReactLibrary = (config, env, options, overrideConfig = false) => {
     const entryFile = options.module;
     const outFile = path.basename(options.main);
     const outDir = options.main.replace(outFile, '');
-    const libraryTarget = optons.libraryTarget || 'commonjs';
+    const libraryTarget = options.libraryTarget || 'commonjs';
     /**
      * add library configurations to webpack config
      */
@@ -36,12 +36,11 @@ const rewireReactLibrary = (config, env, options, overrideConfig = false) => {
         externals[key] = `commonjs ${key}`;
       });
       config.externals = externals;
+      /**
+        * Clear all plugins from CRA webpack config
+      */
+      config.plugins = [];
     }
-
-    /**
-    * Clear all plugins from CRA webpack config
-    */
-    config.plugins = [];
   }
   return config;
 };
