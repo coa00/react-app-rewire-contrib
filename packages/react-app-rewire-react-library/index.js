@@ -30,7 +30,7 @@ const rewireReactLibrary = (config, env, options, overrideConfig = false) => {
 
     // CSS Name
     if (options.outCss) {
-      config.plugins.filename = path.basename(options.outCss);
+      config.plugins[4].filename = path.basename(options.outCss);
     }
 
     if (libraryTarget === "commonjs") {
