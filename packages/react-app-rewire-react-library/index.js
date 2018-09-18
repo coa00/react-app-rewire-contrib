@@ -1,7 +1,7 @@
-const path = require('path');
+const path = require("path");
 
 const rewireReactLibrary = (config, env, options, overrideConfig = false) => {
-  if (String(overrideConfig).toLowerCase() === 'true') {
+  if (String(overrideConfig).toLowerCase() === "true") {
     /**
      * Determine Library Name based on package name
      * basename will omit scope name from npm scoped packages
@@ -13,8 +13,9 @@ const rewireReactLibrary = (config, env, options, overrideConfig = false) => {
      */
     const entryFile = options.module;
     const outFile = path.basename(options.main);
-    const outDir = options.main.replace(outFile, '');
-    const libraryTarget = options.libraryTarget || 'commonjs';
+
+    const outDir = options.main.replace(outFile, "");
+    const libraryTarget = options.libraryTarget || "commonjs";
     /**
      * add library configurations to webpack config
      */
@@ -27,18 +28,23 @@ const rewireReactLibrary = (config, env, options, overrideConfig = false) => {
     config.output.filename = outFile;
     config.output.path = path.resolve(outDir);
 
-    if (libraryTarget === 'commonjs'){
+    // CSS Name
+    if (options.outCss) {
+      config.plugins.filename = path.basename(options.outCss);
+    }
+
+    if (libraryTarget === "commonjs") {
       /**
        * Add all package dependencies as externals as commonjs externals
        */
-      let externals = {};
+      const externals = {};
       Object.keys(options.dependencies).forEach(key => {
         externals[key] = `commonjs ${key}`;
       });
       config.externals = externals;
       /**
-        * Clear all plugins from CRA webpack config
-      */
+       * Clear all plugins from CRA webpack config
+       */
       config.plugins = [];
     }
   }
