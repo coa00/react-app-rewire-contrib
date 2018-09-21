@@ -28,9 +28,19 @@ const rewireReactLibrary = (config, env, options, overrideConfig = false) => {
     config.output.filename = outFile;
     config.output.path = path.resolve(outDir);
 
+    let myPlugins = [];
+
     // CSS Name
     if (options.outCss) {
+      myPlugins.push()
       config.plugins[4].filename = path.basename(options.outCss);
+      myPlugins.push(config.plugins[4]);
+    }
+
+    // HTML Name
+    if (options.outHtml) {
+      config.plugins[1].options.filename = path.basename(options.outHtml);
+      myPlugins.push(config.plugins[1]);
     }
 
     if (libraryTarget === "commonjs") {
@@ -45,8 +55,9 @@ const rewireReactLibrary = (config, env, options, overrideConfig = false) => {
       /**
        * Clear all plugins from CRA webpack config
        */
-      config.plugins = [];
     }
+
+    config.plugins = myPlugins;
   }
   return config;
 };
